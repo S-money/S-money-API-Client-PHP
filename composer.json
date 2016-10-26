@@ -1,0 +1,24 @@
+{
+    "name": "smoney/smoney",
+    "type": "library",
+    "description": "Smoney client",
+    "homepage": "http://www.s-money.fr",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sherlockode",
+            "email": "contact@sherlockode.fr"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "guzzlehttp/guzzle": "~6.0",
+        "jms/serializer-bundle": "~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Smoney\\Smoney\\":""
+        } 
+    }
+}
+
