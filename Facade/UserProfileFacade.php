@@ -1,18 +1,21 @@
 <?php
 
-namespace Facade;
+namespace Smoney\Smoney\Facade;
 
 use JMS\Serializer\Annotation\Type;
 
+/**
+ * Class UserProfileFacade
+ */
 class UserProfileFacade
 {
-	/**
-	 * @Type("string")
-	 */
-	private $firstname;
+    /**
+     * @Type("string")
+     */
+    private $firstname;
 
-	/**
-	* @Type("DateTime")
-	*/
-	private $birthdate;
+    /**
+    * @Type("DateTime")
+    */
+    private $birthdate;
 }

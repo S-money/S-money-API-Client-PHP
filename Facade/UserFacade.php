@@ -1,18 +1,26 @@
 <?php
 
-namespace Facade;
+namespace Smoney\Smoney\Facade;
 
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\SerializedName;
+use Smoney\Smoney\Facade\UserProfileFacade;
 
+/**
+ * Class UserProfileFacade
+ */
 class UserFacade
 {
-	/**
-	 * @Type("integer")
-	 */
-	private $id;
+    /**
+     * @var integer $Id
+     * @Type("integer")
+     */
+    private $Id;
+    
 
-	/**
-	* @Type("Facade\UserProfileFacade")
-	*/
-	private $UserProfile;
+    /**
+    * @var UserProfileFacade $Profile
+    * @Type("UserProfileFacade")
+    */
+    private $Profile;
 }

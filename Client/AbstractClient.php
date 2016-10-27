@@ -1,63 +1,55 @@
 <?php
 
-namespace Client;
+namespace Smoney\Smoney\Client;
 
 use GuzzleHttp\Client;
+use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 
+/**
+ * Class AbstractClient
+ */
 abstract class AbstractClient
 {
-	protected $baseUrl;
+    /**
+     * @var string
+     */
+    protected $baseUrl;
+
+    /**
+     * @var array
+     */
     protected $headers;
+
+    /**
+     * @var httpClient
+     */
     protected $httpClient;
-    protected $serializer;
-    
 
-	public function __construct($baseUrl, array $headers, Client $httpClient, SerializerBuilder $serializerBuilder)
+    /**
+     * @var Serializer
+     */
+    protected $serializer;    
+
+
+    /**
+     * @param string $baseUrl
+     * @param array $headers
+     */
+    public function __construct($baseUrl, array $headers)
     {
-        $this->setBaseUrl($baseUrl);
+        $this->baseUrl = $baseUrl;
         $this->setHeaders($headers);
-        $this->setClient($httpClient);
-        $this->setSerializer($serializerBuilder);
-        
+        $this->httpClient = new Client();
+        $this->serializer = SerializerBuilder::create()->build();
     }
 
-    public function setBaseUrl($baseUrl)
-    {
-        return ($this->baseUrl = $baseUrl);
-    }
-
-    public function setClient($httpClient)
-    {
-        $this->httpClient = $httpClient;
-        return $this;
-    }
-
-    public function setSerializer($serializer)
-    {
-        $this->serializer = $serializer->build();
-        return $this;
-    }
-
+    /**
+     * @param array $headers
+     */
     public function setHeaders($headers)
     {
         $this->headers = $headers;
         return $this;
-    }
-
-
-    // getters à conf ? va t on avoir besoin de récup le toke 
-
-
-    protected static function isReponseValid($result)
-    {
-        if ($result == false
-            || !isset($result['content'])
-            || (isset($result['content']['Code']) && $result['content']['Code'] != null)
-            || (isset($result['content']['Message']) && $result['content']['Message'] == 'The request is invalid.')) {
-            return false;
-        }
-
-        return true;
     }
 }
