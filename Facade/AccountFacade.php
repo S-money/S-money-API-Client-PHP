@@ -32,11 +32,11 @@ class AccountFacade
     public $amount;
 
     /**
-     * @var string $displayname
+     * @var string $displayName
      * @SerializedName("DisplayName")
      * @Type("string")
      */
-    public $displayname;
+    public $displayName;
 
     /**
      * @var bool $isDefault
@@ -46,10 +46,9 @@ class AccountFacade
     public $isDefault;
 
     /**
-     * @var DateTime $creationDate
+     * @var DateTime $created_at
      * @SerializedName("CreationDate")
      * @Type("DateTime<'Y-m-d\TH:i:s'>")
      */
-    public $creationDate;
-
+    public $created_at;
 }
