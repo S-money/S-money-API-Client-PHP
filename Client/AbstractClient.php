@@ -4,7 +4,6 @@ namespace Smoney\Smoney\Client;
 
 use GuzzleHttp\Client;
 use JMS\Serializer\Serializer;
-use JMS\Serializer\SerializerBuilder;
 
 /**
  * Class AbstractClient
@@ -36,12 +35,12 @@ abstract class AbstractClient
      * @param string $baseUrl
      * @param array $headers
      */
-    public function __construct($baseUrl, array $headers)
+    public function __construct($baseUrl, array $headers, Client $httpClient, Serializer $serializer)
     {
         $this->baseUrl = $baseUrl;
         $this->setHeaders($headers);
-        $this->httpClient = new Client();
-        $this->serializer = SerializerBuilder::create()->build();
+        $this->httpClient = $httpClient;
+        $this->serializer = $serializer;
     }
 
     /**
