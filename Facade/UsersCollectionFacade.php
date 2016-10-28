@@ -12,16 +12,8 @@ use Smoney\Smoney\Facade\UserFacade;
 class UsersCollectionFacade
 {
     /**
-     * @var array
-     * @type 
-     */
-    public $users = array();
-
-    /**
-     * @param UserFacade $user
-     */
-    public function addUser(UserFacade $user)
-    {
-        $this->users[] = $user;
-    }
+    * @var UsersCollectionFacade $users
+    * @Type("arrayCollection<Smoney\Smoney\Facade\UserFacade>")
+    */
+    public $users;
 }
