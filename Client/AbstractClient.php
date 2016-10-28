@@ -51,4 +51,12 @@ abstract class AbstractClient
         $this->headers = $headers;
         return $this;
     }
+
+    protected function action($httpVerbe, $uri)
+    {
+        return $this->httpClient
+                ->request(strtoupper($httpVerbe), $this->baseUrl.'/'.$uri, ['headers'=>$this->headers])
+                ->getBody()
+                ->getContents();
+    }
 }
