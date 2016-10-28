@@ -10,9 +10,9 @@ use Smoney\Smoney\Facade\UserFacade;
  */
 class UserClient extends AbstractClient
 {
-	/**
-	 * @param integer $id
-	 */
+    /**
+     * @param integer $id
+     */
     public function getUser($id)
     {
         $res = $this->httpClient
