@@ -34,6 +34,8 @@ abstract class AbstractClient
     /**
      * @param string $baseUrl
      * @param array $headers
+     * @param Client $httpClient
+     * @param Serializer $serializer
      */
     public function __construct($baseUrl, array $headers, Client $httpClient, Serializer $serializer)
     {
@@ -52,6 +54,10 @@ abstract class AbstractClient
         return $this;
     }
 
+    /**
+     * @param string $httpVerb
+     * @param string $uri
+     */
     protected function action($httpVerb, $uri)
     {
         return $this->httpClient
