@@ -4,7 +4,6 @@ namespace Smoney\Smoney\Facade;
 
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
-use Smoney\Smoney\Facade\UserProfileFacade;
 
 /**
  * Class UserProfileFacade
@@ -54,9 +53,30 @@ class UserFacade
     public $profile;
 
     /**
-    * @var AccountsCollectionFacade $accountsCollection
+    * @var AccountsCollectionFacade $accounts
     * @SerializedName("SubAccounts")
-    * @Type("ArrayCollection<Smoney\Smoney\Facade\AccountsCollectionFacade>")
+    * @Type("ArrayCollection<Smoney\Smoney\Facade\AccountFacade>")
     */
-    public $AccountsCollection;
+    public $accounts;
+
+    /**
+    * @var BankAccountRefsCollectionFacade $bankAccounts
+    * @SerializedName("SubAccounts")
+    * @Type("ArrayCollection<Smoney\Smoney\Facade\BankAccountRefFacade>")
+    */
+    public $bankAccounts;
+
+    /**
+    * @var CbCardsCollectionFacade $cbCards
+    * @SerializedName("CbCards")
+    * @Type("ArrayCollection<Smoney\Smoney\Facade\CbCardFacade>")
+    */
+    public $cbCards;
+
+    /**
+    * @var CompanyFacade $company
+    * @SerializedName("Company")
+    * @Type("Smoney\Smoney\Facade\CompanyFacade")
+    */
+    public $company;
 }
