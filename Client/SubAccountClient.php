@@ -11,7 +11,8 @@ use Smoney\Smoney\Facade\SubAccountFacade;
 class SubAccountClient extends AbstractClient
 {
     /**
-     * @param integer $appUserId
+     * @param string $appUserId
+     * @param int    $appAccountId
      */
     public function getAccounts($appUserId)
     {
@@ -22,8 +23,7 @@ class SubAccountClient extends AbstractClient
     }
 
     /**
-     * @param integer $appUserId
-     * @param integer $appAccountId
+     * @param string $appUserId
      */
     public function getAccount($appUserId, $appAccountId)
     {
@@ -34,7 +34,7 @@ class SubAccountClient extends AbstractClient
     }
 
     /**
-     * @param integer $appUsertId
+     * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
     public function createSubAccount($appUserId, SubAccountFacade $subAccount)
@@ -45,7 +45,7 @@ class SubAccountClient extends AbstractClient
     }
 
     /**
-     * @param integer $appUsertId
+     * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
     public function updateAccount($appUserId, SubAccountFacade $subAccount)
@@ -57,7 +57,7 @@ class SubAccountClient extends AbstractClient
     }
 
     /**
-     * @param integer $appUsertId
+     * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
     public function deleteSubAccount($appUserId, SubAccountFacade $subAccount)

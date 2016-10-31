@@ -11,7 +11,7 @@ use Smoney\Smoney\Facade\UserFacade;
 class UserClient extends AbstractClient
 {
     /**
-     * @param integer $appUserId
+     * @param int $appUserId
      */
     public function getUser($appUserId)
     {

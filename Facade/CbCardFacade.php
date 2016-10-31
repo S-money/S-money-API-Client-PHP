@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Type;
 class CbCardFacade
 {
     /**
-     * @var integer $id
+     * @var int $id
      * @SerializedName("Id")
      * @Type("integer")
      */

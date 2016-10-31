@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Type;
 class SubAccountFacade
 {
     /**
-     * @var integer $accounts
+     * @var int $accounts
      * @SerializedName("Id")
      * @Type("string")
      */
@@ -25,7 +25,7 @@ class SubAccountFacade
     public $appAccountId;
 
     /**
-     * @var integer $amount
+     * @var int $amount
      * @SerializedName("Amount")
      * @Type("integer")
      */

@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation\Type;
 class UserFacade
 {
     /**
-     * @var integer $id
+     * @var int $id
      * @SerializedName("Id")
      * @Type("integer")
      */
@@ -25,21 +25,21 @@ class UserFacade
     public $appUserId;
 
     /**
-     * @var integer $role
+     * @var int $role
      * @SerializedName("Role")
      * @Type("integer")
      */
     public $role;
 
     /**
-     * @var integer $type
+     * @var int $type
      * @SerializedName("Type")
      * @Type("integer")
      */
     public $type;
 
     /**
-     * @var integer $amount
+     * @var int $amount
      * @SerializedName("Amount")
      * @Type("integer")
      */
@@ -74,7 +74,7 @@ class UserFacade
     public $cbCards;
 
     /**
-    * @var integer $status
+    * @var int $status
     * @SerializedName("Status")
     * @Type("integer")
     */
