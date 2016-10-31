@@ -42,4 +42,35 @@ class UserClient extends AbstractClient
 
         return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\UserFacade>', 'json');
     }
+
+    /**
+     * @param UserFacade $user
+     */
+    public function createUser(UserFacade $user)
+    {
+        $uri = 'users';
+        $body = $this->serializer->serialize($user, 'json');
+        
+        return $this->action('POST', $uri, $body);
+    }
+
+    /**
+     * @param UserFacade $user
+     */
+    public function updateUser(UserFacade $user)
+    {
+        $uri = 'users/'.$user->appUserId;
+        $body = $this->serializer->serialize($user, 'json');
+
+        return $this->action('PUT', $uri, $body);
+    }
+
+    /**
+     * @param UserFacade $user
+     */
+    public function closeUser(UserFacade $user)
+    {
+        $user->status = 5;
+        return $this->updateUser($user);
+    }
 }
