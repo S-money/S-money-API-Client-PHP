@@ -74,6 +74,13 @@ class UserFacade
     public $cbCards;
 
     /**
+    * @var integer $status
+    * @SerializedName("Status")
+    * @Type("integer")
+    */
+    public $status;
+
+    /**
     * @var CompanyFacade $company
     * @SerializedName("Company")
     * @Type("Smoney\Smoney\Facade\CompanyFacade")
