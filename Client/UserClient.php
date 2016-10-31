@@ -27,8 +27,7 @@ class UserClient extends AbstractClient
         $uri = 'users';
         $res = $this->action('GET', $uri);
 
-        $usersCollectionFacade = new UsersCollectionFacade();
-        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UsersCollectionFacade', 'json');
+        return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\UserFacade>', 'json');
     }
 
     public function searchUsers($smoney_user_id, $firstName, $lastName, $email)
