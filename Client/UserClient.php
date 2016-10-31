@@ -21,7 +21,7 @@ class UserClient extends AbstractClient
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UserFacade', 'json');
     }
 
-    public function getUsers()
+    public function list()
     {
         $uri = 'users';
         $res = $this->action('GET', $uri);
@@ -35,7 +35,7 @@ class UserClient extends AbstractClient
      * @param string $lastName
      * @param string email
      */
-    public function searchUsers($smoney_user_id = null, $firstName = null, $lastName = null, $email = null)
+    public function search($smoney_user_id = null, $firstName = null, $lastName = null, $email = null)
     {
         $uri = 'users/search?firstname='.$firstName.'&lastname='.$lastName.'&email='.$email;
         $res = $this->action('GET', $uri);
@@ -46,7 +46,7 @@ class UserClient extends AbstractClient
     /**
      * @param UserFacade $user
      */
-    public function createUser(UserFacade $user)
+    public function create(UserFacade $user)
     {
         $uri = 'users';
         $body = $this->serializer->serialize($user, 'json');
@@ -57,7 +57,7 @@ class UserClient extends AbstractClient
     /**
      * @param UserFacade $user
      */
-    public function updateUser(UserFacade $user)
+    public function update(UserFacade $user)
     {
         $uri = 'users/'.$user->appUserId;
         $body = $this->serializer->serialize($user, 'json');
@@ -68,9 +68,10 @@ class UserClient extends AbstractClient
     /**
      * @param UserFacade $user
      */
-    public function closeUser(UserFacade $user)
+    public function close(UserFacade $user)
     {
         $user->status = 5;
+
         return $this->updateUser($user);
     }
 }

@@ -14,18 +14,7 @@ class SubAccountClient extends AbstractClient
      * @param string $appUserId
      * @param int    $appAccountId
      */
-    public function getAccounts($appUserId)
-    {
-        $uri = 'users/'.$appUserId.'/subaccounts';
-        $res = $this->action('GET', $uri);
-
-        return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\SubAccountFacade>', 'json');
-    }
-
-    /**
-     * @param string $appUserId
-     */
-    public function getAccount($appUserId, $appAccountId)
+    public function get($appUserId, $appAccountId)
     {
         $uri = 'users/'.$appUserId.'/subaccounts/'.$appAccountId;
         $res = $this->action('GET', $uri);
@@ -34,13 +23,25 @@ class SubAccountClient extends AbstractClient
     }
 
     /**
+     * @param string $appUserId
+     */
+    public function list($appUserId)
+    {
+        $uri = 'users/'.$appUserId.'/subaccounts';
+        $res = $this->action('GET', $uri);
+
+        return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\SubAccountFacade>', 'json');
+    }
+
+    /**
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
-    public function createSubAccount($appUserId, SubAccountFacade $subAccount)
+    public function create($appUserId, SubAccountFacade $subAccount)
     {
         $uri = 'users/'.$appUserId.'/subaccounts';
         $body = $this->serializer->serialize($subAccount, 'json');
+
         return $this->action('POST', $uri, $body);
     }
 
@@ -48,7 +49,7 @@ class SubAccountClient extends AbstractClient
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
-    public function updateAccount($appUserId, SubAccountFacade $subAccount)
+    public function update($appUserId, SubAccountFacade $subAccount)
     {
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
@@ -60,7 +61,7 @@ class SubAccountClient extends AbstractClient
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
      */
-    public function deleteSubAccount($appUserId, SubAccountFacade $subAccount)
+    public function delete($appUserId, SubAccountFacade $subAccount)
     {
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
