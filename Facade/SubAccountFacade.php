@@ -8,7 +8,7 @@ use JMS\Serializer\Annotation\Type;
 /**
  * Class AccountFacade
  */
-class AccountFacade
+class SubAccountFacade
 {
     /**
      * @var integer $accounts
