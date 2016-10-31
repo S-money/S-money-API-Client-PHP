@@ -35,7 +35,7 @@ class UserProfileFacade
     /**
      * @var DateTime $birthdate
      * @SerializedName("Birthdate")
-     * @Type("DateTime")
+     * @Type("DateTime<'Y-m-d\TH:i:s'>")
      */
     public $birthdate;
 
