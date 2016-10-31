@@ -57,11 +57,12 @@ abstract class AbstractClient
     /**
      * @param string $httpVerb
      * @param string $uri
+     * @param string $body
      */
-    protected function action($httpVerb, $uri)
+    protected function action($httpVerb, $uri, $body = null)
     {
         return $this->httpClient
-                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, ['headers'=>$this->headers])
+                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, ['headers'=>$this->headers, 'body' => $body])
                 ->getBody()
                 ->getContents();
     }
