@@ -53,15 +53,15 @@ class UserFacade
     public $profile;
 
     /**
-    * @var AccountsCollectionFacade $accounts
+    * @var SubAccountsCollectionFacade $subAccounts
     * @SerializedName("SubAccounts")
-    * @Type("ArrayCollection<Smoney\Smoney\Facade\AccountFacade>")
+    * @Type("ArrayCollection<Smoney\Smoney\Facade\SubAccountFacade>")
     */
-    public $accounts;
+    public $subAccounts;
 
     /**
     * @var BankAccountRefsCollectionFacade $bankAccounts
-    * @SerializedName("SubAccounts")
+    * @SerializedName("BankAccountRef")
     * @Type("ArrayCollection<Smoney\Smoney\Facade\BankAccountRefFacade>")
     */
     public $bankAccounts;
