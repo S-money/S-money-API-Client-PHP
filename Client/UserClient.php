@@ -30,8 +30,17 @@ class UserClient extends AbstractClient
         return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\UserFacade>', 'json');
     }
 
-    public function searchUsers($smoney_user_id, $firstName, $lastName, $email)
+    /**
+     * @param string $smoney_user_id
+     * @param string $firstName
+     * @param string $lastName
+     * @param string email
+     */
+    public function searchUsers($smoney_user_id = null, $firstName = null, $lastName = null, $email = null)
     {
-        $res = $this->action($httpVerbe, $uri);
+        $uri = 'users/search?firstname='.$firstName.'&lastname='.$lastName.'&email='.$email;
+        $res = $this->action('GET', $uri);
+
+        return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\UserFacade>', 'json');
     }
 }
