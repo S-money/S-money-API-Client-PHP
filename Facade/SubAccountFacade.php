@@ -6,7 +6,7 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Class AccountFacade
+ * Class SubAccountFacade
  */
 class SubAccountFacade
 {
