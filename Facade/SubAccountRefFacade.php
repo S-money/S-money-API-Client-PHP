@@ -6,9 +6,9 @@ use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Class SubAccountFacade
+ * Class SubAccountRefFacade
  */
-class SubAccountFacade
+class SubAccountRefFacade
 {
     /**
      * @var int $id
@@ -25,13 +25,6 @@ class SubAccountFacade
     public $appAccountId;
 
     /**
-     * @var int $amount
-     * @SerializedName("Amount")
-     * @Type("integer")
-     */
-    public $amount;
-
-    /**
      * @var string $displayName
      * @SerializedName("DisplayName")
      * @Type("string")
@@ -39,16 +32,9 @@ class SubAccountFacade
     public $displayName;
 
     /**
-     * @var bool $isDefault
-     * @SerializedName("IsDefault")
-     * @Type("boolean")
+     * @var string $href
+     * @SerializedName("Href")
+     * @Type("string")
      */
-    public $isDefault;
-
-    /**
-     * @var DateTime $created_at
-     * @SerializedName("CreationDate")
-     * @Type("DateTime<'Y-m-d\TH:i:s'>")
-     */
-    public $created_at;
+    public $href;
 }

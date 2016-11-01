@@ -6,7 +6,7 @@ use Smoney\Smoney\Client\AbstractClient;
 use Smoney\Smoney\Facade\BankAccountFacade;
 
 /**
- * Class SubAccountClient
+ * Class BankAccountClient
  */
 class BankAccountClient extends AbstractClient
 {
