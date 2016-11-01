@@ -52,8 +52,6 @@ class BankAccountClient extends AbstractClient
      */
     public function update($appUserId, BankAccountFacade $bankAccount)
     {
-        print_r($bankAccount);
-        print "\n";
         $uri = 'users/'.$appUserId.'/bankaccounts';
         $body = $this->serializer->serialize($bankAccount, 'json');
 
