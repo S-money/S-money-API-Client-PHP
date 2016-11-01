@@ -13,7 +13,7 @@ class UserClient extends AbstractClient
     /**
      * @param int $appUserId
      */
-    public function getUser($appUserId)
+    public function get($appUserId)
     {
         $uri = 'users/'.$appUserId;
         $res = $this->action('GET', $uri);
@@ -21,7 +21,7 @@ class UserClient extends AbstractClient
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UserFacade', 'json');
     }
 
-    public function list()
+    public function index()
     {
         $uri = 'users';
         $res = $this->action('GET', $uri);

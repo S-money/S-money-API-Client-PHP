@@ -11,9 +11,9 @@ use JMS\Serializer\Annotation\Type;
 class SubAccountFacade
 {
     /**
-     * @var int $accounts
+     * @var int $id
      * @SerializedName("Id")
-     * @Type("string")
+     * @Type("integer")
      */
     public $id;
 
