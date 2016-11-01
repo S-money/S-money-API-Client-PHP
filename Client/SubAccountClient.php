@@ -25,7 +25,7 @@ class SubAccountClient extends AbstractClient
     /**
      * @param string $appUserId
      */
-    public function list($appUserId)
+    public function index($appUserId)
     {
         $uri = 'users/'.$appUserId.'/subaccounts';
         $res = $this->action('GET', $uri);
