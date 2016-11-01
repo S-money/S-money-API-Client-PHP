@@ -8,10 +8,10 @@ use JMS\Serializer\Annotation\Type;
 /**
  * Class AccountFacade
  */
-class AccountFacade
+class SubAccountFacade
 {
     /**
-     * @var integer $accounts
+     * @var int $accounts
      * @SerializedName("Id")
      * @Type("string")
      */
@@ -25,7 +25,7 @@ class AccountFacade
     public $appAccountId;
 
     /**
-     * @var integer $amount
+     * @var int $amount
      * @SerializedName("Amount")
      * @Type("integer")
      */

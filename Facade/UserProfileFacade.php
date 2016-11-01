@@ -12,7 +12,7 @@ use Smoney\Smoney\Facade\AddressFacade;
 class UserProfileFacade
 {
     /**
-     * @var integer $civility
+     * @var int $civility
      * @SerializedName("Civility")
      * @Type("integer")
      */
