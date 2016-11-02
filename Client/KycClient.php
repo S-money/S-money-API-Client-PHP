@@ -3,7 +3,6 @@
 namespace Smoney\Smoney\Client;
 
 use Smoney\Smoney\Client\AbstractClient;
-use Smoney\Smoney\Facade\PayoutFacade;
 
 /**
  * Class KycClient
