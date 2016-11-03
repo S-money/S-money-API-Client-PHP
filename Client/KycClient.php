@@ -23,11 +23,11 @@ class KycClient extends AbstractClient
         );
         $multiparts = array();
         $i = 1;
-        foreach ($files as $file) {
+        foreach ($files as $key => $value) {
             $multiparts[] = array(
                 'name'=>'file-'.$i,
-                'contents'=>'file-'.$i,
-                'filename'=>'img/'.$file
+                'contents'=>$value,
+                'filename'=>$key
             );
 
             $i ++;
