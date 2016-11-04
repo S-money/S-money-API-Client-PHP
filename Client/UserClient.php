@@ -51,7 +51,7 @@ class UserClient extends AbstractClient
         $uri = 'users';
         $body = $this->serializer->serialize($user, 'json');
         
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 
     /**
@@ -62,7 +62,7 @@ class UserClient extends AbstractClient
         $uri = 'users/'.$user->appUserId;
         $body = $this->serializer->serialize($user, 'json');
 
-        return $this->action('PUT', $uri, $body);
+        return $this->action('PUT', $uri, ['body'=>$body]);
     }
 
     /**

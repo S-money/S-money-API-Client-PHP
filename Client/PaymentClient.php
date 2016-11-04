@@ -42,6 +42,6 @@ class PaymentClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/payments';
         $body = $this->serializer->serialize($payment, 'json');
 
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 }
