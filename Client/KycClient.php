@@ -17,19 +17,20 @@ class KycClient extends AbstractClient
     {
         $uri = 'users/'.$appUserId.'/kyc';
 
-        $headers = array(
+        $headers = [
             'Authorization' => $this->headers['Authorization'],
             'Accept' => $this->headers['Accept'],
-        );
+        ];
+
         $multiparts = array();
+        
         $i = 1;
         foreach ($files as $key => $value) {
-            $multiparts[] = array(
-                'name'=>'file-'.$i,
-                'contents'=>$value,
-                'filename'=>$key
-            );
-
+            $multiparts[] = [
+                'name' => 'file-'.$i,
+                'contents' => $value,
+                'filename' => $key
+            ];
             $i ++;
         }
         $options = [
