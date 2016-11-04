@@ -59,10 +59,14 @@ abstract class AbstractClient
      * @param string $uri
      * @param string $body
      */
-    protected function action($httpVerb, $uri, $body = null)
+    protected function action($httpVerb, $uri, $body = null, $options = null)
     {
+        if (!$options) {
+            $options = ['headers'=>$this->headers, 'body' => $body];
+        }
+
         return $this->httpClient
-                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, ['headers'=>$this->headers, 'body' => $body])
+                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
                 ->getBody()
                 ->getContents();
     }

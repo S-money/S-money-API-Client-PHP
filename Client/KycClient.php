@@ -32,14 +32,12 @@ class KycClient extends AbstractClient
 
             $i ++;
         }
-
-        print_r($multiparts);
-        $res = $this->httpClient->request('POST', $this->baseUrl.'/'.$uri, [
+        $options = [
             'headers'=>$headers,
             'multipart' => $multiparts
-        ])
-        ->getBody()
-        ->getContents();
+        ];
+
+        $res = $this->action('POST', $uri, null, $options);
 
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\KycFacade', 'json');
     }
