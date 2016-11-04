@@ -61,6 +61,7 @@ abstract class AbstractClient
      */
     protected function action($httpVerb, $uri, $extraParams = [], $customHeaders = [])
     {
+        $options = [];
         $options['headers'] = $this->headers;
         
         foreach ($extraParams as $key => $value) {
