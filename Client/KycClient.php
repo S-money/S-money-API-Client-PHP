@@ -28,9 +28,8 @@ class KycClient extends AbstractClient
             ];
             $i ++;
         }
-        $extraParams = ['multipart' => $multiparts];
-        $customHeaders = ['Content-Type'=>null];
-        $res = $this->action('POST', $uri, $extraParams, $customHeaders);
+        
+        $res = $this->action('POST', $uri, ['multipart' => $multiparts], ['Content-Type'=>null]);
 
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\KycFacade', 'json');
     }
