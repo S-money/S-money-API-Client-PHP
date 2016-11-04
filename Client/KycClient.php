@@ -57,7 +57,7 @@ class KycClient extends AbstractClient
     /**
      * @param string $appUserId
      */
-    public function index($appUserId)
+    public function get($appUserId, $kycId)
     {
         $uri = 'users/'.$appUserId.'/kyc'.$kycId;
         $res = $this->action('GET', $uri);
