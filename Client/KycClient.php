@@ -11,7 +11,7 @@ class KycClient extends AbstractClient
 {
     /**
      * @param string $appUserId
-     * @param array  $files with $value is the whole binary file and $key the name that will be sent as filename
+     * @param array  $files with key as filename and value as file content
      */
     public function create($appUserId, $files)
     {
