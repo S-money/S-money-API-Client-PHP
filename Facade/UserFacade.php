@@ -4,6 +4,11 @@ namespace Smoney\Smoney\Facade;
 
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
+use Smoney\Smoney\Facade\UserProfileFacade;
+use Smoney\Smoney\Facade\SubAccountFacade;
+use Smoney\Smoney\Facade\BankAccountRefFacade;
+use Smoney\Smoney\Facade\CbCardFacade;
+use Smoney\Smoney\Facade\CompanyFacade;
 
 /**
  * Class UserProfileFacade
