@@ -50,9 +50,9 @@ class KycClient extends AbstractClient
      */
     public function get($appUserId, $kycId)
     {
-        $uri = 'users/'.$appUserId.'/kyc'.$kycId;
+        $uri = 'users/'.$appUserId.'/kyc/'.$kycId;
         $res = $this->action('GET', $uri);
 
-        return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\KycFacade>', 'json');
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\KycFacade', 'json');
     }
 }
