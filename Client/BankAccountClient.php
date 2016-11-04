@@ -43,7 +43,7 @@ class BankAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/bankaccounts';
         $body = $this->serializer->serialize($bankAccount, 'json');
 
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 
     /**
@@ -55,7 +55,7 @@ class BankAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/bankaccounts';
         $body = $this->serializer->serialize($bankAccount, 'json');
 
-        return $this->action('PUT', $uri, $body);
+        return $this->action('PUT', $uri, ['body'=>$body]);
     }
 
     /**
@@ -67,6 +67,6 @@ class BankAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/bankaccounts/'.$bankAccount->id;
         $body = $this->serializer->serialize($bankAccount, 'json');
 
-        return $this->action('DELETE', $uri, $body);
+        return $this->action('DELETE', $uri, ['body'=>$body]);
     }
 }

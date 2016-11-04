@@ -42,7 +42,7 @@ class SubAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/subaccounts';
         $body = $this->serializer->serialize($subAccount, 'json');
 
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 
     /**
@@ -54,7 +54,7 @@ class SubAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
 
-        return $this->action('PUT', $uri, $body);
+        return $this->action('PUT', $uri, ['body'=>$body]);
     }
 
     /**
@@ -66,6 +66,6 @@ class SubAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
 
-        return $this->action('DELETE', $uri, $body);
+        return $this->action('DELETE', $uri, ['body'=>$body]);
     }
 }

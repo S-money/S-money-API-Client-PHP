@@ -19,7 +19,7 @@ class CardPaymentClient extends AbstractClient
         $uri = 'payins/cardpayments';
         $body = $this->serializer->serialize($payment, 'json');
 
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 
     /**

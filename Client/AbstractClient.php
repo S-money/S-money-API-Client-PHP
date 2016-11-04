@@ -59,10 +59,24 @@ abstract class AbstractClient
      * @param string $uri
      * @param string $body
      */
-    protected function action($httpVerb, $uri, $body = null)
+    protected function action($httpVerb, $uri, $extraParams = [], $customHeaders = [])
     {
+        $options = [];
+        $options['headers'] = $this->headers;
+        
+        foreach ($extraParams as $key => $value) {
+            $options[$key] = $value;
+        }
+
+        foreach ($customHeaders as $key => $value) {
+            $options['headers'][$key] = $value;
+            if ($value === null) {
+                unset($options['headers'][$key]);
+            }
+        }
+
         return $this->httpClient
-                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, ['headers'=>$this->headers, 'body' => $body])
+                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
                 ->getBody()
                 ->getContents();
     }

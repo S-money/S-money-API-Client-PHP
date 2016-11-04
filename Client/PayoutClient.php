@@ -42,6 +42,6 @@ class PayoutClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/payouts/storedbankaccounts';
         $body = $this->serializer->serialize($payout, 'json');
 
-        return $this->action('POST', $uri, $body);
+        return $this->action('POST', $uri, ['body'=>$body]);
     }
 }
