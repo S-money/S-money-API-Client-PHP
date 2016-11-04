@@ -17,7 +17,7 @@ class KycClient extends AbstractClient
     {
         $uri = 'users/'.$appUserId.'/kyc';
 
-        $multiparts = array();
+        $multiparts = [];
         
         $i = 1;
         foreach ($files as $key => $value) {
@@ -28,8 +28,9 @@ class KycClient extends AbstractClient
             ];
             $i ++;
         }
-
-        $res = $this->action('POST', $uri, null, $multiparts);
+        $extraParams = ['multipart' => $multiparts];
+        $customHeaders = ['Content-Type'=>null];
+        $res = $this->action('POST', $uri, $extraParams, $customHeaders);
 
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\KycFacade', 'json');
     }

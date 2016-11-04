@@ -59,18 +59,19 @@ abstract class AbstractClient
      * @param string $uri
      * @param string $body
      */
-    protected function action($httpVerb, $uri, $body = null, $multipart = null)
+    protected function action($httpVerb, $uri, $extraParams = [], $customHeaders = [])
     {
-        if (!$multipart) {
-            $options = ['headers' => $this->headers, 'body' => $body];
-        } else {
-            $options = [
-                'headers' => [
-                    'Authorization' => $this->headers['Authorization'],
-                    'Accept' => $this->headers['Accept'],
-                ],
-                'multipart' => $multipart
-            ];
+        $options['headers'] = $this->headers;
+        
+        foreach ($extraParams as $key => $value) {
+            $options[$key] = $value;
+        }
+
+        foreach ($customHeaders as $key => $value) {
+            $options['headers'][$key] = $value;
+            if ($value === null) {
+                unset($options['headers'][$key]);
+            }
         }
 
         return $this->httpClient
