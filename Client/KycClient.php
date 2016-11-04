@@ -17,11 +17,6 @@ class KycClient extends AbstractClient
     {
         $uri = 'users/'.$appUserId.'/kyc';
 
-        $headers = [
-            'Authorization' => $this->headers['Authorization'],
-            'Accept' => $this->headers['Accept'],
-        ];
-
         $multiparts = array();
         
         $i = 1;
@@ -33,12 +28,8 @@ class KycClient extends AbstractClient
             ];
             $i ++;
         }
-        $options = [
-            'headers'=>$headers,
-            'multipart' => $multiparts
-        ];
 
-        $res = $this->action('POST', $uri, null, $options);
+        $res = $this->action('POST', $uri, null, $multiparts);
 
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\KycFacade', 'json');
     }

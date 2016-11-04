@@ -59,10 +59,18 @@ abstract class AbstractClient
      * @param string $uri
      * @param string $body
      */
-    protected function action($httpVerb, $uri, $body = null, $options = null)
+    protected function action($httpVerb, $uri, $body = null, $multipart = null)
     {
-        if (!$options) {
-            $options = ['headers'=>$this->headers, 'body' => $body];
+        if (!$multipart) {
+            $options = ['headers' => $this->headers, 'body' => $body];
+        } else {
+            $options = [
+                'headers' => [
+                    'Authorization' => $this->headers['Authorization'],
+                    'Accept' => $this->headers['Accept'],
+                ],
+                'multipart' => $multipart
+            ];
         }
 
         return $this->httpClient
