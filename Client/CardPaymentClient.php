@@ -11,20 +11,38 @@ use Smoney\Smoney\Facade\CardPaymentFacade;
 class CardPaymentClient extends AbstractClient
 {
     /**
-     * @param string       $appUserId
-     * @param PayoutFacade $payout
+     * @param PayoutFacade $payment
      */
     public function create(CardPaymentFacade $payment)
     {
         $uri = 'payins/cardpayments';
         $body = $this->serializer->serialize($payment, 'json');
 
-        return $this->action('POST', $uri, ['body'=>$body]);
+        return $this->action('POST', $uri, ['body' => $body]);
     }
 
     /**
-     * @param string $appUserId
-     * @param int    $orderId
+     * @param PayoutFacade $payment
+     */
+    public function create_ecv(CardPaymentFacade $payment)
+    {
+        $payment->availableCards = 'CB;E_CV';
+        
+        return $this->create($payment);
+    }
+
+    /**
+     * @param PayoutFacade $payment
+     */
+    public function create_sofort(CardPaymentFacade $payment)
+    {
+        $payment->availableCards = 'SOFORT_BANKING';
+        
+        return $this->create($payment);
+    }
+
+    /**
+     * @param int $orderId
      */
     public function get($orderId)
     {
@@ -43,5 +61,23 @@ class CardPaymentClient extends AbstractClient
         $res = $this->action('GET', $uri);
 
         return $this->serializer->deserialize($res, 'ArrayCollection<Smoney\Smoney\Facade\CardPaymentFacade>', 'json');
+    }
+
+    /**
+     * @param int $orderId
+     * @param integer $amount
+     * @param integer $fee
+     */
+    public function refund($orderId, $amount, $fee = null)
+    {
+        $uri = 'payins/cardpayments/'.$orderId.'/refunds';
+        $refund = [
+            'orderId' => $orderId,
+            'amount' => $amount,
+            'fee' => $fee
+        ];
+        $body = $this->serializer->serialize($refund, 'json');
+        
+        return $this->action('POST', $uri, ['body' => $body]);
     }
 }
