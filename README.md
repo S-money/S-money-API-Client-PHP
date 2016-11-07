@@ -13,7 +13,7 @@
         SerializerBuilder::create()->build()
     );
 
-### Simple User
+### Create Simple User
 
 To create simple user and its attributes
 
@@ -55,13 +55,82 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
         new Client(),
         SerializerBuilder::create()->build()
     );
+### Simple Payment
 
     $cardPayment = new CardPaymentFacade();
 
-    $cardPayment->urlReturn = 'http://rienrien.com';
+    $cardPayment->urlReturn = 'http://callback_after_payment.com';
     $cardPayment->amount = 2;
     $cardPayment->beneficiary = new subAccountFacade();
     $cardPayment->beneficiary->appAccountId = 'client-112';
     
     $cardPaymentClient->create($cardPayment);
 
+
+### Multiple beneficiaries
+
+(set api to v2 in the array of headers)
+
+    $cardPayment = new CardPaymentFacade();
+    $cardPayment->urlReturn = 'http://callback_after_payment.com';
+    $cardPayment->payments = new ArrayCollection();
+
+    $first = new PaymentFacade();
+    $first->beneficiary = new subAccountFacade();
+    $first->beneficiary->appAccountId = 'ALFRED';
+    $first->amount = 15;
+
+    $cardPayment->payments->add($first);
+
+    $second = new PaymentFacade;
+    ...
+    $cardPayment->payments->add($second);
+
+    $cardPaymentClient->create($cardPayment);
+
+### Get one CardPayment by id
+
+    $cardPaymentClient->get($orderId);
+
+### List all CardPayments
+
+    $cardPaymentClient->index();
+
+
+# Payout
+    $payoutClient = new PayoutClient(
+        'https://rest-pp.s-money.fr/api/sandbox',
+        $headers,
+        new Client(),
+        SerializerBuilder::create()->build()
+    );
+
+
+### Create Payout
+
+    $payout = new PayoutFacade();
+    $payout->orderId = 'hello';
+    $payout->amount = 99;
+    $payout->bankAccount = new BankAccountFacade;
+    $payout->bankAccount->id = 25923;
+    
+    $payoutClient->create('appUserId of the payer', $payout);
+
+
+# Payment
+
+    $paymentClient = new PaymentClient(
+        'https://rest-pp.s-money.fr/api/sandbox',
+        $headers,
+        new Client(),
+        SerializerBuilder::create()->build()
+    );
+
+
+### Create Payment
+
+    $payment->beneficiary = new SubAccountRefFacade();
+    $payment->beneficiary->appAccountId = 'YOUR PAL';
+    $payment->sender = new SubAccountRefFacade();
+    $payment->sender->appAccountId = 'ALFRED';
+    $payment->amount = 99;
