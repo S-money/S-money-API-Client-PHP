@@ -64,20 +64,61 @@ class CardPaymentClient extends AbstractClient
     }
 
     /**
-     * @param int $orderId
-     * @param integer $amount
-     * @param integer $fee
+     * @param string $uri
+     * @param string $orderId
+     * @param int    $amount
+     * @param int    $fee
      */
-    public function refund($orderId, $amount, $fee = null)
+    public function baseRefund($uri, $orderId, $amount, $fee)
     {
-        $uri = 'payins/cardpayments/'.$orderId.'/refunds';
         $refund = [
             'orderId' => $orderId,
             'amount' => $amount,
             'fee' => $fee
         ];
         $body = $this->serializer->serialize($refund, 'json');
-        
+
         return $this->action('POST', $uri, ['body' => $body]);
+    }
+
+    /**
+     * @param string $originalOrderId
+     * @param string $newOrderId
+     * @param int    $amount
+     * @param int    $fee
+     */
+    public function refund($originalOrderId, $newOrderId, $amount, $fee = 0)
+    {
+        $uri = 'payins/cardpayments/'.$originalOrderId.'/refunds';
+        
+        return $this->baseRefund($uri, $newOrderId, $amount, $fee);
+    }
+
+    /**
+     * @param string $orderIdGlobal
+     * @param string $originalOrderId
+     * @param string $newOrderId
+     * @param int    $amount
+     * @param int    $fee
+     */
+    public function refundMultiBeneficiary($orderIdGlobal, $originalSubOrderId, $newOrderId, $amount, $fee = 0)
+    {
+        $uri = '/payins/cardpayments/'.$orderIdGlobal.'/payments/'.$originalSubOrderId.'/refunds';
+
+        return $this->baseRefund($uri, $newOrderId, $amount, $fee);
+    }
+
+
+    /**
+     * @param string $orderIdGlobal
+     * @param string $originalOrderId
+     */
+    public function getOneFromMultiBeneficiary($orderIdGlobal, $originalOrderId)
+    {
+        $uri = '/payins/cardpayments/'.$orderIdGlobal.'/payments/'.$originalOrderId;
+
+        $res = $this->action('GET', $uri);
+
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 }
