@@ -24,7 +24,7 @@ class CardPaymentClient extends AbstractClient
     /**
      * @param PayoutFacade $payment
      */
-    public function create_ecv(CardPaymentFacade $payment)
+    public function createEcv(CardPaymentFacade $payment)
     {
         $payment->availableCards = 'CB;E_CV';
         
@@ -34,7 +34,7 @@ class CardPaymentClient extends AbstractClient
     /**
      * @param PayoutFacade $payment
      */
-    public function create_sofort(CardPaymentFacade $payment)
+    public function createSofort(CardPaymentFacade $payment)
     {
         $payment->availableCards = 'SOFORT_BANKING';
         
