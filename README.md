@@ -1,4 +1,7 @@
-# User
+S-Money library
+===============
+
+## User
 
     $headers = array(
         'Authorization' => 'Bearer NTsyODY7U1B1SUk2Rkx6ag==',
@@ -47,7 +50,7 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $user->company->siret = 'XXXXXXXX';
 
 
-# CardPayment
+## CardPayment
 
     $cardPaymentClient = new CardPaymentClient(
         'https://rest-pp.s-money.fr/api/sandbox',
@@ -97,7 +100,7 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $cardPaymentClient->index();
 
 
-# Payout
+## Payout
     $payoutClient = new PayoutClient(
         'https://rest-pp.s-money.fr/api/sandbox',
         $headers,
@@ -117,7 +120,7 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $payoutClient->create('appUserId of the payer', $payout);
 
 
-# Payment
+## Payment
 
     $paymentClient = new PaymentClient(
         'https://rest-pp.s-money.fr/api/sandbox',
