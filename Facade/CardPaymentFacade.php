@@ -125,7 +125,7 @@ class CardPaymentFacade
     /**
      * @var PaymentScheduleFacade $paymentSchedule
      * @SerializedName("PaymentSchedule")
-     * @Type("Smoney\Smoney\Facade\PaymentScheduleFacade")
+     * @Type("ArrayCollection<Smoney\Smoney\Facade\PaymentScheduleFacade>")
      */
     public $paymentSchedule;
 

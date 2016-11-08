@@ -11,11 +11,11 @@ use JMS\Serializer\Annotation\Type;
 class PaymentScheduleFacade
 {
     /**
-     * @var int $SequenceNumber
+     * @var int $sequenceNumber
      * @SerializedName("SequenceNumber")
      * @Type("integer")
      */
-    public $SequenceNumber;
+    public $sequenceNumber;
 
     /**
      * @var int $amount
