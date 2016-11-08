@@ -87,6 +87,8 @@ abstract class AbstractClient
             if ($e->hasResponse()) {
                 return $this->handleError($e->getResponse());
             }
+
+            return $e;
         }
     }
 
@@ -96,8 +98,8 @@ abstract class AbstractClient
     protected function handleError($response)
     {
         $content = json_decode($response->getBody()->getContents(), true);
-        $message = null;
-        $errorCode = null;
+        $message = 'Erreur inconnue';
+        $errorCode = 0;
 
         if (isset($content['ErrorMessage'])) {
             $message = $content['ErrorMessage'];

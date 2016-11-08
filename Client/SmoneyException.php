@@ -25,6 +25,9 @@ class SmoneyException extends Exception
         $this->httpCode = $httpCode;
     }
 
+    /**
+     * @return int
+     */    
     public function getHttpCode()
     {
         return $this->httpCode;
