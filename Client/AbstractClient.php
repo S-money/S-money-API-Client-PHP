@@ -3,7 +3,10 @@
 namespace Smoney\Smoney\Client;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use Psr\Http\Message\ResponseInterface;
 use JMS\Serializer\Serializer;
+use Smoney\Smoney\Client\SmoneyException;
 
 /**
  * Class AbstractClient
@@ -75,9 +78,39 @@ abstract class AbstractClient
             }
         }
 
-        return $this->httpClient
-                ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
-                ->getBody()
-                ->getContents();
+        try {
+            $res = $this->httpClient
+                    ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
+                    ->getBody()
+                    ->getContents();
+        } catch (RequestException $e) {
+            if ($e->hasResponse()) {
+                return $this->handleError($e->getResponse());
+            }
+
+            return $e;
+        }
     }
+
+    /**
+     * @param ResponseInterface $response
+     */
+    protected function handleError($response)
+    {
+        $content = json_decode($response->getBody()->getContents(), true);
+        $message = 'Erreur inconnue';
+        $errorCode = 0;
+
+        if (isset($content['ErrorMessage'])) {
+            $message = $content['ErrorMessage'];
+        } elseif ($content['Message']) {
+            $message = $content['Message'];
+        }
+
+        if (isset($content['Code'])) {
+            $errorCode = $content['Code'];
+        }
+
+        throw new SmoneyException($message, $errorCode, $response->getStatusCode());
+    }  
 }
