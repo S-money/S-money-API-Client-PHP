@@ -3,6 +3,7 @@
 namespace Smoney\Smoney\Client;
 
 use Smoney\Smoney\Client\AbstractClient;
+use Smoney\Smoney\Facade\KycFacade;
 
 /**
  * Class KycClient
@@ -12,6 +13,8 @@ class KycClient extends AbstractClient
     /**
      * @param string $appUserId
      * @param array  $files with key as filename and value as file content
+     * 
+     * @return KycFacade
      */
     public function create($appUserId, $files)
     {
@@ -36,6 +39,8 @@ class KycClient extends AbstractClient
 
     /**
      * @param string $appUserId
+     * 
+     * @return ArrayCollection
      */
     public function index($appUserId)
     {
@@ -47,6 +52,8 @@ class KycClient extends AbstractClient
 
     /**
      * @param string $appUserId
+     * 
+     * @return KycFacade
      */
     public function get($appUserId, $kycId)
     {

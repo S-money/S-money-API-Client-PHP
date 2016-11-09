@@ -11,18 +11,22 @@ use Smoney\Smoney\Facade\CardPaymentFacade;
 class CardPaymentClient extends AbstractClient
 {
     /**
-     * @param PayoutFacade $payment
+     * @param CardPaymentFacadeFacade $payment
+     *
+     * @return string
      */
     public function create(CardPaymentFacade $payment)
     {
         $uri = 'payins/cardpayments';
         $body = $this->serializer->serialize($payment, 'json');
-
+        
         return $this->action('POST', $uri, ['body' => $body]);
     }
 
     /**
-     * @param PayoutFacade $payment
+     * @param CardPaymentFacadeFacade $payment
+     *
+     * @return string
      */
     public function createEcv(CardPaymentFacade $payment)
     {
@@ -32,7 +36,9 @@ class CardPaymentClient extends AbstractClient
     }
 
     /**
-     * @param PayoutFacade $payment
+     * @param CardPaymentFacadeFacade $payment
+     *
+     * @return string
      */
     public function createSofort(CardPaymentFacade $payment)
     {
@@ -43,6 +49,8 @@ class CardPaymentClient extends AbstractClient
 
     /**
      * @param int $orderId
+     *
+     * @return CardPaymentFacade
      */
     public function get($orderId)
     {
@@ -54,6 +62,8 @@ class CardPaymentClient extends AbstractClient
 
     /**
      * @param string $appUserId
+     *
+     * @return ArrayCollection
      */
     public function index()
     {
@@ -68,6 +78,8 @@ class CardPaymentClient extends AbstractClient
      * @param string $orderId
      * @param int    $amount
      * @param int    $fee
+     *
+     * @return int    $fee
      */
     public function baseRefund($uri, $orderId, $amount, $fee)
     {
@@ -77,8 +89,9 @@ class CardPaymentClient extends AbstractClient
             'fee' => $fee
         ];
         $body = $this->serializer->serialize($refund, 'json');
-
-        return $this->action('POST', $uri, ['body' => $body]);
+        $res = $this->action('POST', $uri, ['body' => $body]);
+        
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**
@@ -101,7 +114,7 @@ class CardPaymentClient extends AbstractClient
      * @param int    $amount
      * @param int    $fee
      */
-    public function refundMultiBeneficiary($orderIdGlobal, $originalSubOrderId, $newOrderId, $amount, $fee = 0)
+    public function refundOneFromMultiBeneficiary($orderIdGlobal, $originalSubOrderId, $newOrderId, $amount, $fee = 0)
     {
         $uri = '/payins/cardpayments/'.$orderIdGlobal.'/payments/'.$originalSubOrderId.'/refunds';
 

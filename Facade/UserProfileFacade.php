@@ -5,7 +5,7 @@ namespace Smoney\Smoney\Facade;
 use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 use Smoney\Smoney\Facade\AddressFacade;
-use Smoney\Smoney\Facade\PhotoRefFacade
+use Smoney\Smoney\Facade\PhotoRefFacade;
 
 /**
  * Class UserProfileFacade
