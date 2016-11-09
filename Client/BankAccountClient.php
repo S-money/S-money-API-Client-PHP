@@ -14,6 +14,8 @@ class BankAccountClient extends AbstractClient
     /**
      * @param string $appUserId
      * @param int    $bankAccountId
+     *
+     * @return BankAccountFacade
      */
     public function get($appUserId, $bankAccountId)
     {
@@ -25,6 +27,8 @@ class BankAccountClient extends AbstractClient
 
     /**
      * @param string $appUserId
+     *
+     * @return ArrayCollection
      */
     public function index($appUserId)
     {
@@ -37,36 +41,42 @@ class BankAccountClient extends AbstractClient
     /**
      * @param string            $appUserId
      * @param BankAccountFacade $bankAccount
+     *
+     * @return BankAccountFacade
      */
     public function create($appUserId, BankAccountFacade $bankAccount)
     {
         $uri = 'users/'.$appUserId.'/bankaccounts';
         $body = $this->serializer->serialize($bankAccount, 'json');
+        $res = $this->action('POST', $uri, ['body'=>$body]);
 
-        return $this->action('POST', $uri, ['body'=>$body]);
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\BankAccountFacade', 'json');
     }
 
     /**
      * @param string            $appUserId
      * @param BankAccountFacade $bankAccount
+     *
+     * @return BankAccountFacade
      */
     public function update($appUserId, BankAccountFacade $bankAccount)
     {
         $uri = 'users/'.$appUserId.'/bankaccounts';
         $body = $this->serializer->serialize($bankAccount, 'json');
+        $res = $this->action('PUT', $uri, ['body'=>$body]);
 
-        return $this->action('PUT', $uri, ['body'=>$body]);
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\BankAccountFacade', 'json');
     }
 
     /**
-     * @param string            $appUserId
-     * @param BankAccountFacade $bankAccount
+     * @param string  $appUserId
+     * @param integer $bankAccount
+     *
+     * @return null
      */
-    public function delete($appUserId, BankAccountFacade $bankAccount)
+    public function delete($appUserId, $bankAccountId)
     {
-        $uri = 'users/'.$appUserId.'/bankaccounts/'.$bankAccount->id;
-        $body = $this->serializer->serialize($bankAccount, 'json');
-
-        return $this->action('DELETE', $uri, ['body'=>$body]);
+        $uri = 'users/'.$appUserId.'/bankaccounts/'.$bankAccountId;
+        $this->action('DELETE', $uri);
     }
 }

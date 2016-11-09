@@ -12,6 +12,8 @@ class UserClient extends AbstractClient
 {
     /**
      * @param int $appUserId
+     *
+     * @return UserFacade
      */
     public function get($appUserId)
     {
@@ -21,6 +23,9 @@ class UserClient extends AbstractClient
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UserFacade', 'json');
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function index()
     {
         $uri = 'users';
@@ -34,6 +39,8 @@ class UserClient extends AbstractClient
      * @param string $firstName
      * @param string $lastName
      * @param string email
+     *
+     * @return ArrayCollection
      */
     public function search($smoney_user_id = null, $firstName = null, $lastName = null, $email = null)
     {
@@ -45,33 +52,41 @@ class UserClient extends AbstractClient
 
     /**
      * @param UserFacade $user
+     *
+     * @return UserFacade
      */
     public function create(UserFacade $user)
     {
         $uri = 'users';
         $body = $this->serializer->serialize($user, 'json');
+        $res = $this->action('POST', $uri, ['body'=>$body]);
         
-        return $this->action('POST', $uri, ['body'=>$body]);
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UserFacade', 'json');
     }
 
     /**
      * @param UserFacade $user
+     *
+     * @return UserFacade
      */
     public function update(UserFacade $user)
     {
         $uri = 'users/'.$user->appUserId;
         $body = $this->serializer->serialize($user, 'json');
-
-        return $this->action('PUT', $uri, ['body'=>$body]);
+        $res = $this->action('PUT', $uri, ['body'=>$body]);
+        
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\UserFacade', 'json');
     }
 
     /**
      * @param UserFacade $user
+     *
+     * @return UserFacade
      */
     public function close(UserFacade $user)
     {
         $user->status = 5;
 
-        return $this->updateUser($user);
+        return $this->update($user);
     }
 }

@@ -13,6 +13,8 @@ class SubAccountClient extends AbstractClient
     /**
      * @param string $appUserId
      * @param int    $appAccountId
+     * 
+     * @return SubAccountFacade
      */
     public function get($appUserId, $appAccountId)
     {
@@ -24,6 +26,8 @@ class SubAccountClient extends AbstractClient
 
     /**
      * @param string $appUserId
+     * 
+     * @return ArrayCollection
      */
     public function index($appUserId)
     {
@@ -36,36 +40,43 @@ class SubAccountClient extends AbstractClient
     /**
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
+     * 
+     * @return SubAccountFacade
      */
     public function create($appUserId, SubAccountFacade $subAccount)
     {
         $uri = 'users/'.$appUserId.'/subaccounts';
         $body = $this->serializer->serialize($subAccount, 'json');
-
-        return $this->action('POST', $uri, ['body'=>$body]);
+        $res = $this->action('POST', $uri, ['body'=>$body]);
+        
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\SubAccountFacade', 'json');
     }
 
     /**
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
+     * 
+     * @return SubAccountFacade
      */
     public function update($appUserId, SubAccountFacade $subAccount)
     {
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
-
-        return $this->action('PUT', $uri, ['body'=>$body]);
+        $res = $this->action('PUT', $uri, ['body'=>$body]);
+        
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\SubAccountFacade', 'json');
     }
 
     /**
-     * @param string           $appUserId
-     * @param SubAccountFacade $subAccount
+     * @param string  $appUserId
+     * @param integer $subAccountId
+     *
+     * @return null
      */
-    public function delete($appUserId, SubAccountFacade $subAccount)
+    public function delete($appUserId, $subAccountId)
     {
-        $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
-        $body = $this->serializer->serialize($subAccount, 'json');
+        $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccountId;
 
-        return $this->action('DELETE', $uri, ['body'=>$body]);
+        return $this->action('DELETE', $uri);
     }
 }
