@@ -45,9 +45,9 @@ abstract class AbstractClient
     {
         $this->baseUrl = $baseUrl;
         $this->headers = [
-            'Authorization' => 'Bearer '. $token .'',
-            $this->setVersion($version)
+            'Authorization' => 'Bearer '. $token .''
         ];
+        $this->setVersion($version);
         $this->httpClient = $httpClient;
         $this->serializer = $serializer;
     }
