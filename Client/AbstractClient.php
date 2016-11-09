@@ -35,11 +35,11 @@ abstract class AbstractClient
 
 
     /**
-     * @param string $baseUrl
-     * @param string $token
-     * @param string $version
-     * @param ClientInterface $httpClient
-     * @param SerializerInterface $serializer
+     * @param string                $baseUrl
+     * @param string                $token
+     * @param string                $version
+     * @param ClientInterface       $httpClient
+     * @param SerializerInterface   $serializer
      */
     public function __construct($baseUrl, $token, $version, ClientInterface $httpClient, SerializerInterface $serializer)
     {
@@ -54,6 +54,7 @@ abstract class AbstractClient
 
     /**
      * @param array $version
+     *
      * @return $this
      */
     public function setVersion($version)
@@ -66,6 +67,7 @@ abstract class AbstractClient
 
     /**
      * @param array $headers
+     *
      * @return $this
      */
     public function setHeaders($headers)
@@ -106,19 +108,18 @@ abstract class AbstractClient
                     ->getBody()
                     ->getContents();
         } catch (RequestException $e) {
-
             throw $this->getErrorException($e);
         }
     }
 
     /**
      * @param RequestException $e
+     *
      * @return SmoneyException|\RuntimeException
      */
     protected function getErrorException(RequestException $e)
     {
-        if(!$e->hasResponse())
-        {
+        if(!$e->hasResponse()) {
             return new \RuntimeException('', 0, $e);
         }
 
