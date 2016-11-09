@@ -80,9 +80,9 @@ abstract class AbstractClient
      * @param string $uri
      * @param array $extraParams
      * @param array $customHeaders
-     * @return \Exception|RequestException|void
-     * @throws \Exception
-     * @throws \Smoney\Smoney\Client\SmoneyException
+     *
+     * @return string
+     * @throws \Exception|SmoneyException
      */
     protected function action($httpVerb, $uri, $extraParams = [], $customHeaders = [])
     {
@@ -101,26 +101,29 @@ abstract class AbstractClient
         }
 
         try {
-            $res = $this->httpClient
+            return $this->httpClient
                     ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
                     ->getBody()
                     ->getContents();
         } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                return $this->handleError($e->getResponse());
-            }
-            throw new \Exception('Runtime Exception', 0, $e);
+
+            throw $this->getErrorException($e);
         }
     }
 
     /**
-     * @param ResponseInterface $response
-     * @throws \Smoney\Smoney\Client\SmoneyException
+     * @param RequestException $e
+     * @return SmoneyException|\RuntimeException
      */
-    protected function handleError($response)
+    protected function getErrorException(RequestException $e)
     {
-        $content = json_decode($response->getBody()->getContents(), true);
-        $message = 'Erreur inconnue';
+        if(!$e->hasResponse())
+        {
+            return new \RuntimeException('', 0, $e);
+        }
+
+        $content = json_decode($e->getResponse()->getBody()->getContents(), true);
+        $message = 'Unknown Error';
         $errorCode = 0;
 
         if (isset($content['ErrorMessage'])) {
@@ -133,6 +136,6 @@ abstract class AbstractClient
             $errorCode = $content['Code'];
         }
 
-        throw new SmoneyException($message, $errorCode, $response->getStatusCode());
+        return new SmoneyException($message, $errorCode, $e->getResponse()->getStatusCode());
     }  
 }
