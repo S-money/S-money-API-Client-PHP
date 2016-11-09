@@ -4,7 +4,7 @@ S-Money library
 ## User
 
     $headers = array(
-        'Authorization' => 'Bearer NTsyODY7U1B1SUk2Rkx6ag==',
+        'Authorization' => 'Bearer ACESS_TOKEN',
         'Accept' => 'application/vnd.s-money.v1+json',
         'Content-Type' => 'application/vnd.s-money.v1+json'
     );

@@ -2,10 +2,10 @@
 
 namespace Smoney\Smoney\Client;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Message\ResponseInterface;
-use JMS\Serializer\Serializer;
+use JMS\Serializer\SerializerInterface;
 use Smoney\Smoney\Client\SmoneyException;
 
 /**
@@ -24,43 +24,67 @@ abstract class AbstractClient
     protected $headers;
 
     /**
-     * @var httpClient
+     * @var ClientInterface
      */
     protected $httpClient;
 
     /**
-     * @var Serializer
+     * @var SerializerInterface
      */
     protected $serializer;    
 
 
     /**
-     * @param string $baseUrl
-     * @param array $headers
-     * @param Client $httpClient
-     * @param Serializer $serializer
+     * @param string                $baseUrl
+     * @param string                $token
+     * @param string                $version
+     * @param ClientInterface       $httpClient
+     * @param SerializerInterface   $serializer
      */
-    public function __construct($baseUrl, array $headers, Client $httpClient, Serializer $serializer)
+    public function __construct($baseUrl, $token, $version, ClientInterface $httpClient, SerializerInterface $serializer)
     {
         $this->baseUrl = $baseUrl;
-        $this->setHeaders($headers);
+        $this->headers = [
+            'Authorization' => 'Bearer '. $token .''
+        ];
+        $this->setVersion($version);
         $this->httpClient = $httpClient;
         $this->serializer = $serializer;
     }
 
     /**
+     * @param array $version
+     *
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->headers['Accept'] = 'application/vnd.s-money.'. $version .'+json';
+        $this->headers['Content-Type'] = 'application/vnd.s-money.'. $version .'+json';
+
+        return $this;
+    }
+
+    /**
      * @param array $headers
+     *
+     * @return $this
      */
     public function setHeaders($headers)
     {
         $this->headers = $headers;
+
         return $this;
     }
 
     /**
      * @param string $httpVerb
      * @param string $uri
-     * @param string $body
+     * @param array $extraParams
+     * @param array $customHeaders
+     *
+     * @return string
+     * @throws \Exception|SmoneyException
      */
     protected function action($httpVerb, $uri, $extraParams = [], $customHeaders = [])
     {
@@ -79,26 +103,28 @@ abstract class AbstractClient
         }
 
         try {
-            $res = $this->httpClient
+            return $this->httpClient
                     ->request(strtoupper($httpVerb), $this->baseUrl.'/'.$uri, $options)
                     ->getBody()
                     ->getContents();
         } catch (RequestException $e) {
-            if ($e->hasResponse()) {
-                return $this->handleError($e->getResponse());
-            }
-
-            return $e;
+            throw $this->getErrorException($e);
         }
     }
 
     /**
-     * @param ResponseInterface $response
+     * @param RequestException $e
+     *
+     * @return SmoneyException|\RuntimeException
      */
-    protected function handleError($response)
+    protected function getErrorException(RequestException $e)
     {
-        $content = json_decode($response->getBody()->getContents(), true);
-        $message = 'Erreur inconnue';
+        if(!$e->hasResponse()) {
+            return new \RuntimeException('', 0, $e);
+        }
+
+        $content = json_decode($e->getResponse()->getBody()->getContents(), true);
+        $message = 'Unknown Error';
         $errorCode = 0;
 
         if (isset($content['ErrorMessage'])) {
@@ -111,6 +137,6 @@ abstract class AbstractClient
             $errorCode = $content['Code'];
         }
 
-        throw new SmoneyException($message, $errorCode, $response->getStatusCode());
+        return new SmoneyException($message, $errorCode, $e->getResponse()->getStatusCode());
     }  
 }
