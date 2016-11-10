@@ -24,6 +24,19 @@ class CardPaymentClient extends AbstractClient
     }
 
     /**
+     * @param CardPaymentFacade $payment
+     *
+     * @return string
+     */
+    public function createMultiSchedules(CardPaymentFacade $payment, $appuserId)
+    {
+        $uri = 'users/'.$appuserId.'/payins/cardpayments';
+        $body = $this->serializer->serialize($payment, 'json');
+
+        return $this->action('POST', $uri, ['body' => $body]);
+    }
+
+    /**
      * @param CardPaymentFacade$payment
      *
      * @return string
