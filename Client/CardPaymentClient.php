@@ -11,7 +11,7 @@ use Smoney\Smoney\Facade\CardPaymentFacade;
 class CardPaymentClient extends AbstractClient
 {
     /**
-     * @param CardPaymentFacadeFacade $payment
+     * @param CardPaymentFacade $payment
      *
      * @return string
      */
@@ -24,7 +24,7 @@ class CardPaymentClient extends AbstractClient
     }
 
     /**
-     * @param CardPaymentFacadeFacade $payment
+     * @param CardPaymentFacade$payment
      *
      * @return string
      */
@@ -36,7 +36,7 @@ class CardPaymentClient extends AbstractClient
     }
 
     /**
-     * @param CardPaymentFacadeFacade $payment
+     * @param CardPaymentFacade $payment
      *
      * @return string
      */
@@ -105,6 +105,34 @@ class CardPaymentClient extends AbstractClient
         $uri = 'payins/cardpayments/'.$originalOrderId.'/refunds';
         
         return $this->baseRefund($uri, $newOrderId, $amount, $fee);
+    }
+
+    /**
+     * @param string $originalOrderId
+     * @param string $sequenceNumber
+     * @param int    $amount
+     * @param int    $fee
+     */
+    public function refundOneSequence($originalOrderId, $sequenceNumber, $amount, $fee = 0)
+    {
+        $uri = 'payins/cardpayments/'.$originalOrderId.'/'.$sequenceNumber.'/refunds';
+
+        return $this->baseRefund($uri, $originalOrderId, $amount, $fee);
+    }
+
+    /**
+     * @param string $originalOrderId
+     * @param string $sequenceNumber
+     * @param CardPaymentFacade $cardPayment
+     *
+     */
+    public function cancelRefundOneSequence($originalOrderId, $sequenceNumber, CardPaymentFacade $cardPayment)
+    {
+        $uri = 'payins/cardpayments/'.$originalOrderId.'/'.$sequenceNumber;
+        $body = $this->serializer->serialize($cardPayment, 'json');
+        $res = $this->action('PUT', $uri, ['body'=>$body]);
+
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**

@@ -69,10 +69,9 @@ class BankAccountClient extends AbstractClient
     }
 
     /**
-     * @param string  $appUserId
-     * @param integer $bankAccount
+     * @param string $appUserId
+     * @param        $bankAccountId
      *
-     * @return null
      */
     public function delete($appUserId, $bankAccountId)
     {
