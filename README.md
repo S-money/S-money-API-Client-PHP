@@ -2,24 +2,19 @@ S-Money library
 ===============
 
 ## User
-
-    $headers = array(
-        'Authorization' => 'Bearer ACESS_TOKEN',
-        'Accept' => 'application/vnd.s-money.v1+json',
-        'Content-Type' => 'application/vnd.s-money.v1+json'
-    );
-
+```php
     $userClient = new UserClient(
         'https://rest-pp.s-money.fr/api/sandbox',
-        $headers,
+        $token,
+        $version,
         new Client(),
         SerializerBuilder::create()->build()
     );
-
+```
 ### Create Simple User
 
 To create simple user and its attributes
-
+```php
     $user = new UserFacade();
     $user->appUserId = 'ALFRED';
     
@@ -38,28 +33,30 @@ To create simple user and its attributes
 
     /* Then we POST the $user */
     $userClient->create($user);
-
+```
 
 ### Business User
 
 you only need to set the `$type` attribute of the 'UserFacade' to `2` and the set `company` attribute with `$name` and `$siret` :
-
+```php
     $user->type = 2;
     $user->company = new CompanyFacade();
     $user->company->name = 'HELLO LTD';
     $user->company->siret = 'XXXXXXXX';
-
+```
 
 ## CardPayment
-
+```php
     $cardPaymentClient = new CardPaymentClient(
         'https://rest-pp.s-money.fr/api/sandbox',
-        $headers,
+        $token,
+        $version,
         new Client(),
         SerializerBuilder::create()->build()
     );
+```    
 ### Simple Payment
-
+```php
     $cardPayment = new CardPaymentFacade();
 
     $cardPayment->urlReturn = 'http://callback_after_payment.com';
@@ -68,12 +65,12 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $cardPayment->beneficiary->appAccountId = 'client-112';
     
     $cardPaymentClient->create($cardPayment);
-
+```
 
 ### Multiple beneficiaries
 
-(set api to v2 in the array of headers)
-
+(set api to v2 in the version)
+```php
     $cardPayment = new CardPaymentFacade();
     $cardPayment->urlReturn = 'http://callback_after_payment.com';
     $cardPayment->payments = new ArrayCollection();
@@ -90,27 +87,29 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $cardPayment->payments->add($second);
 
     $cardPaymentClient->create($cardPayment);
-
+```
 ### Get one CardPayment by id
-
+```php
     $cardPaymentClient->get($orderId);
-
+```
 ### List all CardPayments
-
+```php
     $cardPaymentClient->index();
-
+```
 
 ## Payout
+```php
     $payoutClient = new PayoutClient(
         'https://rest-pp.s-money.fr/api/sandbox',
-        $headers,
+        $token,
+        $version,
         new Client(),
         SerializerBuilder::create()->build()
     );
-
+```
 
 ### Create Payout
-
+```php
     $payout = new PayoutFacade();
     $payout->orderId = 'hello';
     $payout->amount = 99;
@@ -118,22 +117,24 @@ you only need to set the `$type` attribute of the 'UserFacade' to `2` and the se
     $payout->bankAccount->id = 25923;
     
     $payoutClient->create('appUserId of the payer', $payout);
-
+```
 
 ## Payment
-
+```php
     $paymentClient = new PaymentClient(
         'https://rest-pp.s-money.fr/api/sandbox',
-        $headers,
+        $token,
+        $version,
         new Client(),
         SerializerBuilder::create()->build()
     );
-
+```
 
 ### Create Payment
-
+```php
     $payment->beneficiary = new SubAccountRefFacade();
     $payment->beneficiary->appAccountId = 'YOUR PAL';
     $payment->sender = new SubAccountRefFacade();
     $payment->sender->appAccountId = 'ALFRED';
     $payment->amount = 99;
+```
