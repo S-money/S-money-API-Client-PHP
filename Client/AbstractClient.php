@@ -4,8 +4,8 @@ namespace Smoney\Smoney\Client;
 
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
-use Psr\Http\Message\ResponseInterface;
 use JMS\Serializer\SerializerInterface;
+use Psr\Http\Message\ResponseInterface;
 use Smoney\Smoney\Client\SmoneyException;
 
 /**
@@ -31,15 +31,15 @@ abstract class AbstractClient
     /**
      * @var SerializerInterface
      */
-    protected $serializer;    
+    protected $serializer;
 
 
     /**
-     * @param string                $baseUrl
-     * @param string                $token
-     * @param string                $version
-     * @param ClientInterface       $httpClient
-     * @param SerializerInterface   $serializer
+     * @param string              $baseUrl
+     * @param string              $token
+     * @param string              $version
+     * @param ClientInterface     $httpClient
+     * @param SerializerInterface $serializer
      */
     public function __construct($baseUrl, $token, $version, ClientInterface $httpClient, SerializerInterface $serializer)
     {
@@ -53,7 +53,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @param array $version
+     * @param string $version
      *
      * @return $this
      */
@@ -80,8 +80,8 @@ abstract class AbstractClient
     /**
      * @param string $httpVerb
      * @param string $uri
-     * @param array $extraParams
-     * @param array $customHeaders
+     * @param array  $extraParams
+     * @param array  $customHeaders
      *
      * @return string
      * @throws \Exception|SmoneyException
@@ -90,7 +90,7 @@ abstract class AbstractClient
     {
         $options = [];
         $options['headers'] = $this->headers;
-        
+
         foreach ($extraParams as $key => $value) {
             $options[$key] = $value;
         }
@@ -119,7 +119,7 @@ abstract class AbstractClient
      */
     protected function getErrorException(RequestException $e)
     {
-        if(!$e->hasResponse()) {
+        if (!$e->hasResponse()) {
             return new \RuntimeException('', 0, $e);
         }
 
@@ -138,5 +138,5 @@ abstract class AbstractClient
         }
 
         return new SmoneyException($message, $errorCode, $e->getResponse()->getStatusCode());
-    }  
+    }
 }

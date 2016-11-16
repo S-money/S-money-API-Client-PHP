@@ -13,7 +13,7 @@ class SubAccountClient extends AbstractClient
     /**
      * @param string $appUserId
      * @param int    $appAccountId
-     * 
+     *
      * @return SubAccountFacade
      */
     public function get($appUserId, $appAccountId)
@@ -26,7 +26,7 @@ class SubAccountClient extends AbstractClient
 
     /**
      * @param string $appUserId
-     * 
+     *
      * @return ArrayCollection
      */
     public function index($appUserId)
@@ -40,7 +40,7 @@ class SubAccountClient extends AbstractClient
     /**
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
-     * 
+     *
      * @return SubAccountFacade
      */
     public function create($appUserId, SubAccountFacade $subAccount)
@@ -48,14 +48,14 @@ class SubAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/subaccounts';
         $body = $this->serializer->serialize($subAccount, 'json');
         $res = $this->action('POST', $uri, ['body'=>$body]);
-        
+
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\SubAccountFacade', 'json');
     }
 
     /**
      * @param string           $appUserId
      * @param SubAccountFacade $subAccount
-     * 
+     *
      * @return SubAccountFacade
      */
     public function update($appUserId, SubAccountFacade $subAccount)
@@ -63,7 +63,7 @@ class SubAccountClient extends AbstractClient
         $uri = 'users/'.$appUserId.'/subaccounts/'.$subAccount->appAccountId;
         $body = $this->serializer->serialize($subAccount, 'json');
         $res = $this->action('PUT', $uri, ['body'=>$body]);
-        
+
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\SubAccountFacade', 'json');
     }
 
@@ -71,7 +71,7 @@ class SubAccountClient extends AbstractClient
      * @param string  $appUserId
      * @param integer $subAccountId
      *
-     * @return null
+     * @return string
      */
     public function delete($appUserId, $subAccountId)
     {
