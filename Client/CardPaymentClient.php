@@ -13,55 +13,60 @@ class CardPaymentClient extends AbstractClient
     /**
      * @param CardPaymentFacade $payment
      *
-     * @return string
+     * @return CardPaymentFacade
      */
     public function create(CardPaymentFacade $payment)
     {
         $uri = 'payins/cardpayments';
         $body = $this->serializer->serialize($payment, 'json');
-        
-        return $this->action('POST', $uri, ['body' => $body]);
+        $res = $this->action('POST', $uri, ['body' => $body]);
+
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**
      * @param CardPaymentFacade $payment
+     * @param string            $appUserId
      *
-     * @return string
+     * @return CardPaymentFacade
      */
     public function createMultiSchedules(CardPaymentFacade $payment, $appuserId)
     {
         $uri = 'users/'.$appuserId.'/payins/cardpayments';
         $body = $this->serializer->serialize($payment, 'json');
+        $res = $this->action('POST', $uri, ['body' => $body]);
 
-        return $this->action('POST', $uri, ['body' => $body]);
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**
      * @param CardPaymentFacade$payment
      *
-     * @return string
+     * @return CardPaymentFacade
      */
     public function createEcv(CardPaymentFacade $payment)
     {
         $payment->availableCards = 'CB;E_CV';
-        
-        return $this->create($payment);
+        $res = $this->create($payment);
+
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**
      * @param CardPaymentFacade $payment
      *
-     * @return string
+     * @return CardPaymentFacade
      */
     public function createSofort(CardPaymentFacade $payment)
     {
         $payment->availableCards = 'SOFORT_BANKING';
-        
-        return $this->create($payment);
+        $res = $this->create($payment);
+
+        return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
     /**
-     * @param int $orderId
+     * @param string $orderId
      *
      * @return CardPaymentFacade
      */
@@ -92,7 +97,7 @@ class CardPaymentClient extends AbstractClient
      * @param int    $amount
      * @param int    $fee
      *
-     * @return int    $fee
+     * @return CardPaymentFacade
      */
     public function baseRefund($uri, $orderId, $amount, $fee)
     {
@@ -103,7 +108,7 @@ class CardPaymentClient extends AbstractClient
         ];
         $body = $this->serializer->serialize($refund, 'json');
         $res = $this->action('POST', $uri, ['body' => $body]);
-        
+
         return $this->serializer->deserialize($res, 'Smoney\Smoney\Facade\CardPaymentFacade', 'json');
     }
 
@@ -112,11 +117,13 @@ class CardPaymentClient extends AbstractClient
      * @param string $newOrderId
      * @param int    $amount
      * @param int    $fee
+     *
+     * @return CardPaymentFacade
      */
     public function refund($originalOrderId, $newOrderId, $amount, $fee = 0)
     {
         $uri = 'payins/cardpayments/'.$originalOrderId.'/refunds';
-        
+
         return $this->baseRefund($uri, $newOrderId, $amount, $fee);
     }
 
@@ -125,6 +132,8 @@ class CardPaymentClient extends AbstractClient
      * @param string $sequenceNumber
      * @param int    $amount
      * @param int    $fee
+     *
+     * @return CardPaymentFacade
      */
     public function refundOneSequence($originalOrderId, $sequenceNumber, $amount, $fee = 0)
     {
@@ -138,6 +147,7 @@ class CardPaymentClient extends AbstractClient
      * @param string $sequenceNumber
      * @param CardPaymentFacade $cardPayment
      *
+     * @return CardPaymentFacade
      */
     public function cancelRefundOneSequence($originalOrderId, $sequenceNumber, CardPaymentFacade $cardPayment)
     {
@@ -154,6 +164,8 @@ class CardPaymentClient extends AbstractClient
      * @param string $newOrderId
      * @param int    $amount
      * @param int    $fee
+     *
+     * @return CardPaymentFacade
      */
     public function refundOneFromMultiBeneficiary($orderIdGlobal, $originalSubOrderId, $newOrderId, $amount, $fee = 0)
     {
@@ -166,6 +178,8 @@ class CardPaymentClient extends AbstractClient
     /**
      * @param string $orderIdGlobal
      * @param string $originalOrderId
+     *
+     * @return CardPaymentFacade
      */
     public function getOneFromMultiBeneficiary($orderIdGlobal, $originalOrderId)
     {

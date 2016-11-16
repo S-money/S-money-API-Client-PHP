@@ -70,12 +70,14 @@ class BankAccountClient extends AbstractClient
 
     /**
      * @param string $appUserId
-     * @param        $bankAccountId
+     * @param string $bankAccountId
      *
+     * @return string
      */
     public function delete($appUserId, $bankAccountId)
     {
         $uri = 'users/'.$appUserId.'/bankaccounts/'.$bankAccountId;
-        $this->action('DELETE', $uri);
+
+        return $this->action('DELETE', $uri);
     }
 }
