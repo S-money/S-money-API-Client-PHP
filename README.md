@@ -4,7 +4,7 @@ S-Money library
 ## Installation
 
 ```
-composer require smoney/smoney
+composer install
 ```
 
 ## Usage
