@@ -54,7 +54,6 @@ $user->appUserId = 'ALFRED';
 /* Then, more complex attributes */
 
 /* profile attribute */
-$user->profile = $userProfileFacade();
 $user->profile = new UserProfileFacade();
 $user->profile->firstName = 'toto';
 $user->profile->lastName = 'foo';
