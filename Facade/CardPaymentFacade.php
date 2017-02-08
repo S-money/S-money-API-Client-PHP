@@ -65,6 +65,13 @@ class CardPaymentFacade
      * @Type("string")
      */
     public $message;
+    
+    /**
+     * @var string $href
+     * @SerializedName("Href")
+     * @Type("string")
+     */
+    public $href;
 
     /**
      * @var bool $isMine
